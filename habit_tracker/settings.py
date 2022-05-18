@@ -24,8 +24,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # 'django-insecure-kh@!6c99^xl8_qataa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))  # True
-
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")  # []  # ['127.0.0.1']
+ALLOWED_HOSTS = ['*']  # os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")  # []  # ['127.0.0.1']
 
 
 # Application definition
@@ -75,9 +74,13 @@ WSGI_APPLICATION = 'habit_tracker.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
