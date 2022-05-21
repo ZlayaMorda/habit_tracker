@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")  # 'django-insecure-kh@!6c99^xl8_qataay*cs_8cl-@bn=!t##v#ahk49odjadyx('
+SECRET_KEY = 'django-insecure-kh@!6c99^xl8_qataay*cs_8cl-@bn=!t##v#ahk49odjadyx('# os.environ.get("SECRET_KEY")  # 'django-insecure-kh@!6c99^xl8_qataay*cs_8cl-@bn=!t##v#ahk49odjadyx('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))  # True
+DEBUG = True # int(os.environ.get("DEBUG", default=0))  # True
 ALLOWED_HOSTS = ['*']  # os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")  # []  # ['127.0.0.1']
 
 
@@ -74,17 +74,26 @@ WSGI_APPLICATION = 'habit_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+#         "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+#         "USER": os.environ.get("SQL_USER", "user"),
+#         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+#         "HOST": os.environ.get("SQL_HOST", "localhost"),
+#         "PORT": os.environ.get("SQL_PORT", "5432"),
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
-    }
+   'default': {
+       'ENGINE': os.environ.get("SQL_ENGINE"),
+       'NAME': os.environ.get("SQL_DATABASE"),
+       'USER': os.environ.get("SQL_USER"),
+       'PASSWORD': os.environ.get("SQL_PASSWORD"),
+       'HOST': os.environ.get("SQL_HOST"),
+       'PORT': os.environ.get("SQL_PORT"),
+   }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -121,6 +130,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = []
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
