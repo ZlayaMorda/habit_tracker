@@ -1,0 +1,18 @@
+{% extends 'main_habit/base.html' %}
+{% load static %}
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'css_bootstrap/bootstrap.css' %}"
+    />
+{% block content %}
+    {% for s in all_sets %}
+			<li><h2>{{s.habit_topic}}</h2>
+        {% autoescape on %}
+            {% for h in s.habits.all %}
+                <h3>{{h.name}}</h3>
+                {{h.describe|linebreaks|truncatewords:50}}
+            {% endfor %}
+        {% endautoescape %}
+	{% endfor %}
+{% endblock %}
