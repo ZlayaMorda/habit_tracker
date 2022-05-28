@@ -25,10 +25,16 @@ class Statistics(models.Model):
     is_done = models.BooleanField(default=False)
     habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return 'statistics'
+
 
 class Achieve(models.Model):
     image = models.ImageField()
     statistics = models.IntegerField()
+
+    def __str__(self):
+        return 'achieve'
 
 
 class Profile(models.Model):
@@ -36,3 +42,6 @@ class Profile(models.Model):
     achieves = models.ManyToManyField(Achieve)
     habit_sets = models.ManyToManyField(HabitSet)
     avatar = models.ImageField()
+
+    def __str__(self):
+        return self.user.get_full_name()

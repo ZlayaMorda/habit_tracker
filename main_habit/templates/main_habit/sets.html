@@ -6,6 +6,7 @@
         href="{% static 'css_bootstrap/bootstrap.css' %}"
     />
 {% block content %}
+    <h1>{{title}}</h1>
     {% for s in all_sets %}
 			<li><h2>{{s.habit_topic}}</h2>
         {% autoescape on %}

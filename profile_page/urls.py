@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-from profile_page.views import profile
+from main_habit.views import *
 
 urlpatterns = [
     path('', main_page, name='main'),

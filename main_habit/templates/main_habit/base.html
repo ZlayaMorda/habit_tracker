@@ -4,10 +4,16 @@
 <head>
 	<title>{{title}}</title>
 	<link type="text/css" href="{% static 'main_habit/css/styles.css' %}" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css"
+      rel="stylesheet"
+    />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="{% static 'main_habit/images/main.ico' %}" type="image/x-icon"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+{#<section style="background-color: #98FB98;">#}
+{#{<section style="background-image: url({% static 'main_habit/images/phone1.jpg' %})">}#}
 <body>
 <table class="table-page" border=0 cellpadding="0" cellspacing="0">
 <tr><td valign=top>
@@ -26,6 +32,7 @@
 			<div class="clear"></div>
 		</div>
 {% endblock main-menu %}
+
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
 <tr>
 <td valign="top" class="content">
@@ -38,6 +45,7 @@
 {% block content %}
 {% endblock %}
 	</div>
+
 <!-- Конец блока контента -->
 
 </td></tr></table>
@@ -50,4 +58,5 @@
 </td></tr></table>
 <!-- Конец footer'а и страницы -->
 </body>
+{#</section>#}
 </html>
