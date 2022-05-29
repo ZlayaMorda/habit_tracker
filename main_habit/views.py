@@ -51,7 +51,3 @@ class HabitSetList(APIView):
 
 def own_tasks(request):
     return HttpResponse("Own_tasks")
-
-
-def login(request):
-    return HttpResponse("Login")
