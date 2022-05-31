@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth import logout
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from rest_framework.renderers import TemplateHTMLRenderer
 
@@ -26,6 +27,9 @@ class HabitSetList(APIView):
         return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu})
 
 
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 # @api_view(['GET'])
 # def habit_set_list(request):
 #     """

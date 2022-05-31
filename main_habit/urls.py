@@ -1,6 +1,6 @@
 from django.urls import path
 
-from login_registration.views import login, registration
+from login_registration.views import RegistrationUser, LoginUser
 from .views import *
 from profile_page.views import profile
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('login/', login, name='login'),
-    path('register/', registration, name='register')
+    path('login/', LoginUser.as_view(), name='login'),
+    path('register/', RegistrationUser.as_view(), name='register'),
+    path('logout/', logout_user, name='logout')
 ]
