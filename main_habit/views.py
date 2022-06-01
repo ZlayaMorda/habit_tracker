@@ -1,7 +1,10 @@
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from rest_framework.renderers import TemplateHTMLRenderer
+from django.contrib.auth.decorators import login_required
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,12 +21,23 @@ def main_page(request):
     return render(request, 'main_habit/base.html', context=context)
 
 
-class HabitSetList(APIView):
+class HabitSetList(LoginRequiredMixin, APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'main_habit/sets.html'
+    redirect_field_name = 'redirect_to'
 
     def get(self, request):
-        queryset = HabitSet.objects.all()
+        queryset = HabitSet.objects.filter(~Q(profile__user=request.user))
+        return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu})
+
+
+class UserHabitSetList(LoginRequiredMixin, APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'main_habit/user_sets.html'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        queryset = request.user.profile.habit_sets.all()
         return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu})
 
 
@@ -53,5 +67,18 @@ def logout_user(request):
 #     return render(request, 'main_habit/sets.html', context=context)
 
 
+def add_set_to_user(request, set_id):
+    # if True:
+    #     user = request.user
+    #     prof = Profile(user)
+    #     user.profile = prof
+    #     user.profile.save()
+    add_set = HabitSet.objects.get(pk=set_id)
+    Profile.objects.get_or_create(user=request.user)
+    request.user.profile.habit_sets.add(add_set)
+    return redirect('sets')
+
+
+@login_required
 def own_tasks(request):
     return HttpResponse("Own_tasks")

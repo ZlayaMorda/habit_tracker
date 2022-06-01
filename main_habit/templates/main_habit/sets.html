@@ -1,19 +1,45 @@
 {% extends 'main_habit/base.html' %}
 {% load static %}
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="{% static 'css_bootstrap/bootstrap.css' %}"
-    />
 {% block content %}
-    <h1>{{title}}</h1>
+{#    {% for s in all_sets %}#}
+{#			<li><h2>{{s.habit_topic}}</h2>#}
+{#        {% autoescape on %}#}
+{#            {% for h in s.habits.all %}#}
+{#                <h3>{{h.name}}</h3>#}
+{#                {{h.describe|linebreaks|truncatewords:50}}#}
+{#            {% endfor %}#}
+{#        {% endautoescape %}#}
+{#	{% endfor %}#}
+    <div class="row">
     {% for s in all_sets %}
-			<li><h2>{{s.habit_topic}}</h2>
-        {% autoescape on %}
-            {% for h in s.habits.all %}
-                <h3>{{h.name}}</h3>
-                {{h.describe|linebreaks|truncatewords:50}}
-            {% endfor %}
-        {% endautoescape %}
-	{% endfor %}
+                <div class="card mb-4 mb-md-0" style="background-color: #E0FFFF; margin-top: 30px; margin-left: 500px; inline-size: 800px">
+                  <div class="card-body">
+                      <p class="note note-primary" style="font-size: 2rem">
+                          <strong>{{s.habit_topic}}</strong>
+                      </p>
+                            {% autoescape on %}
+                                {% for h in s.habits.all %}
+                                    <ul>
+                                        <p class="note note-secondary" style="font-size: 1rem">
+                                            <strong>{{h.name}}</strong>
+                                        </p>
+                                        <li>
+                                            {{h.describe|linebreaks|truncatewords:50}}
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            {% endautoescape %}
+                      <div class="d-flex justify-content-end mb-2">
+{#                        <button type="button" class="btn btn-secondary btn-lg" style="font-size: 1.25rem"#}
+{#                         href="{% url 'add_set' s.pk %}">Добавить</button>#}
+{#                          <form action="{% url 'add_set' s.pk %}" method="POST">#}
+{#                            <input id="submit" type="button" value="Click" />#}
+{#                            <button type="submit" class="btn btn-secondary btn-lg" style="font-size: 1.25rem">Добавить</button>#}
+                              <a class="btn btn-secondary btn-lg" href="{% url 'add_set' s.pk %}" style="font-size: 1.25rem">Добавить</a>
+{#                          </form>#}
+                      </div>
+                  </div>
+                </div>
+    {% endfor %}
+    </div>
 {% endblock %}

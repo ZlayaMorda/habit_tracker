@@ -1,0 +1,46 @@
+{% extends 'main_habit/base.html' %}
+{% load static %}
+{% block content %}
+{#    {% for s in all_sets %}#}
+{#			<li><h2>{{s.habit_topic}}</h2>#}
+{#        {% autoescape on %}#}
+{#            {% for h in s.habits.all %}#}
+{#                <h3>{{h.name}}</h3>#}
+{#                {{h.describe|linebreaks|truncatewords:50}}#}
+{#            {% endfor %}#}
+{#        {% endautoescape %}#}
+{#	{% endfor %}#}
+    <div class="row">
+    {% for s in all_sets %}
+                <div class="card mb-4 mb-md-0" style="background-color: #E0FFFF; margin-top: 30px; margin-left: 500px; inline-size: 800px">
+                  <div class="card-body">
+                      <p class="note note-primary" style="font-size: 2rem">
+                          <strong>{{s.habit_topic}}</strong>
+                      </p>
+                            {% autoescape on %}
+                                {% for h in s.habits.all %}
+                                    <ul>
+                                        <p class="note note-secondary" style="font-size: 1rem">
+                                            <strong>{{h.name}}</strong>
+                                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel"
+                                                   value="" aria-label="..." style="position: fixed; left: 1250px" />
+                                        </p>
+                                        <li>
+                                            {{h.describe|linebreaks|truncatewords:50}}
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            {% endautoescape %}
+                      <div class="d-flex justify-content-end mb-2">
+{#                        <button type="button" class="btn btn-secondary btn-lg" style="font-size: 1.25rem"#}
+{#                         href="{% url 'add_set' s.pk %}">Добавить</button>#}
+                          <form action="{% url 'add_set' s.pk %}" method="POST">
+{#                            <input id="submit" type="button" value="Click" />#}
+                            <button type="submit" class="btn btn-secondary btn-lg" style="font-size: 1.25rem">Добавить</button>
+                          </form>
+                      </div>
+                  </div>
+                </div>
+    {% endfor %}
+    </div>
+{% endblock %}

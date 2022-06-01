@@ -10,7 +10,7 @@ class HabitSetSerializer(serializers.ModelSerializer):
 
 class HabitSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Habit
+        model = Habits
         fields = ("name", "describe", "habit_set")
 
 
