@@ -35,10 +35,15 @@ class UserHabitSetList(LoginRequiredMixin, APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'main_habit/user_sets.html'
     redirect_field_name = 'redirect_to'
+    day_now = date.today()
 
     def get(self, request):
         queryset = request.user.profile.habit_sets.all()
-        return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu})
+        for q in queryset:
+            for h in q.habits.all():
+                Statistics.objects.get_or_create(time=self.day_now, habit=h, profile=request.user.profile)
+        statistics_set = Statistics.objects.filter(time=self.day_now)
+        return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu, 'statistics_set': statistics_set})
 
 
 def logout_user(request):
@@ -74,7 +79,7 @@ def add_set_to_user(request, set_id):
     #     user.profile = prof
     #     user.profile.save()
     add_set = HabitSet.objects.get(pk=set_id)
-    Profile.objects.get_or_create(user=request.user)
+    # Profile.objects.get_or_create(user=request.user)
     request.user.profile.habit_sets.add(add_set)
     return redirect('sets')
 
