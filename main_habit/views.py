@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.contrib.auth.decorators import login_required
 
@@ -42,7 +43,7 @@ class UserHabitSetList(LoginRequiredMixin, APIView):
         for q in queryset:
             for h in q.habits.all():
                 Statistics.objects.get_or_create(time=self.day_now, habit=h, profile=request.user.profile)
-        statistics_set = Statistics.objects.filter(time=self.day_now)
+        statistics_set = Statistics.objects.filter(time=self.day_now, profile=request.user.profile)
         return Response({'all_sets': queryset, 'title': 'Подборки', 'menu': menu, 'statistics_set': statistics_set})
 
 
@@ -84,6 +85,13 @@ def add_set_to_user(request, set_id):
     return redirect('sets')
 
 
-@login_required
-def own_tasks(request):
-    return HttpResponse("Own_tasks")
+@csrf_exempt
+def set_habit_check(request):
+    stat_id = request.POST['stat_id']
+    stat = Statistics.objects.get(pk=stat_id)
+    if stat.is_done:
+        stat.is_done = False
+    else:
+        stat.is_done = True
+    stat.save()
+    return HttpResponse("Success!")
