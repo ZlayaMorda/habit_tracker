@@ -19,5 +19,32 @@ services:
       - POSTGRES_USER=ZlayaMorda
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=habit_tracker_dev
+
+  redis:
+    image: redis
+
+  celery:
+    build: .
+    command: celery -A habit_tracker worker -l info
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+      - web
+
+  celery-beat:
+    build: .
+    command: celery -A habit_tracker beat -l info
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+      - web
 volumes:
   postgres_data:
