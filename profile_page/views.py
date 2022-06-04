@@ -32,9 +32,9 @@ class ProfileInfo(LoginRequiredMixin, APIView):
         table_false = []
         for i in range(6, -1, -1):
             table_true.append([str(date.today() - timedelta(days=i)),
-                               Statistics.objects.filter(time=date.today() - timedelta(days=i), is_done=True).count()])
+                               Statistics.objects.filter(profile__user=request.user, time=date.today() - timedelta(days=i), is_done=True).count()])
             table_false.append([str(date.today() - timedelta(days=i)),
-                                Statistics.objects.filter(time=date.today() - timedelta(days=i),
+                                Statistics.objects.filter(profile__user=request.user, time=date.today() - timedelta(days=i),
                                                           is_done=False).count()])
 
         table_true_str = json.dumps(table_true)
@@ -47,9 +47,6 @@ class ProfileInfo(LoginRequiredMixin, APIView):
             true_habits = Statistics.objects.filter(profile__user=request.user, is_done=True, habit=i).count()
             habit_dict[i.name] = (all_habits, true_habits, int(true_habits/all_habits * 100))
 
-        for k in habit_dict.keys():
-            print(k)
-            print(habit_dict[k])
         return Response({'username': username, 'title': 'Профиль', 'menu': menu,
                          'table_true': table_true_str, 'table_false': table_false_str,
                          'habits_dict': habit_dict}, )
