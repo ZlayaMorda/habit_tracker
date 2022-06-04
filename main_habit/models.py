@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.contrib.postgres.indexes import GinIndex
+
 
 class HabitSet(models.Model):
     habit_topic = models.CharField(max_length=62)
@@ -32,6 +34,9 @@ class Statistics(models.Model):
     def __str__(self):
         return 'statistics'
 
+    class Meta:
+        indexes = [GinIndex(fields=['time', 'is_done', 'habit', 'profile'])]
+
 
 class Achieve(models.Model):
     image = models.ImageField()
@@ -49,6 +54,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.get_username()
+
+    class Meta:
+        indexes = [GinIndex(fields=['user'])]
 
 
 @receiver(post_save, sender=User)
