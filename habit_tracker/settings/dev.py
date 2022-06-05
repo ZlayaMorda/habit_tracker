@@ -184,54 +184,33 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
-# LOG_PATH = os.path.join(BASE_DIR, "logs/")
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': True,
-#
-#     'formatters': {
-#         'standard': {
-#             'format': '%(asctime)s - %(levelname)s - %(message)s'}
-#     },
-#
-#     'handlers': {
-#         'errors': {
-#             'level': 'DEBUG',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'filename': LOG_PATH + 'errors.log',
-#             'formatter': 'standard'
-#         },
-#         'requests': {
-#             'level': 'DEBUG',
-#             'class': 'logging.handlers.RotatingFileHandler',
-#             'filename': LOG_PATH + 'requests.log',
-#             'formatter': 'standard'
-#         },
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'standard'
-#         }
-#     },
-#
-#     'loggers': {
-#         # REQUESTS
-#         'django': {
-#             'handlers': ['requests', 'console'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#         # ERRORS
-#         'django.request': {
-#             'handlers': ['errors', 'console'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#         # ORM ERRORS
-#         'django.db.backends': {
-#             'handlers': ['errors', 'console'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         }
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': 'debug.log'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        }
+    }
+}
