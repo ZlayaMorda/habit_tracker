@@ -74,13 +74,7 @@ def logout_user(request):
 
 
 def add_set_to_user(request, set_id):
-    # if True:
-    #     user = request.user
-    #     prof = Profile(user)
-    #     user.profile = prof
-    #     user.profile.save()
     add_set = HabitSet.objects.get(pk=set_id)
-    # Profile.objects.get_or_create(user=request.user)
     request.user.profile.habit_sets.add(add_set)
     return redirect('sets')
 
