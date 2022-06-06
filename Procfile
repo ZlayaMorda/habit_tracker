@@ -1,3 +1,3 @@
 release: python manage.py migrate
 
-web: gunicorn movie_web.wsgi --log-file -
+web: gunicorn habit_tracker.wsgi --log-file -

@@ -1,7 +1,7 @@
 .idea/
 
 # Environments
-.env
+.env.dev
 .venv
 env/
 venv/

@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # 'django-insecure-kh@!6c99^xl8_qataa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))  # True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'stark-lake-30585.herokuapp.com']  # os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")  # []  # ['127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calm-tor-68470.herokuapp.com']  # os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")  # []  # ['127.0.0.1']
 
 
 # Application definition
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'habit_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]# [BASE_DIR / 'templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -82,12 +82,12 @@ WSGI_APPLICATION = 'habit_tracker.wsgi.application'
 
 DATABASES = {
    'default': {
-       'ENGINE': os.environ.get("SQL_ENGINE"),
-       'NAME': os.environ.get("SQL_DATABASE"),
-       'USER': os.environ.get("SQL_USER"),
-       'PASSWORD': os.environ.get("SQL_PASSWORD"),
-       'HOST': os.environ.get("SQL_HOST"),
-       'PORT': os.environ.get("SQL_PORT"),
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'd9cbj8ji2k47p',
+       'USER': 'suskxdnoizfnvt',
+       'PASSWORD': '66dd8b499865ea24c041e6c5fc917a0f018c020903cd2355ba642306849afa4f',
+       'HOST': 'ec2-34-225-159-178.compute-1.amazonaws.com',
+       'PORT': '5432',
    }
 }
 
@@ -126,9 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / "staticfiles"  # os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_DIRS = []
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
