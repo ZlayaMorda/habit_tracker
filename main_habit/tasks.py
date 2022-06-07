@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from celery import shared_task
 from django.core.mail import send_mail
-from habit_tracker.settings import prod
+from habit_tracker.settings import dev
 from .models import *
 import datetime
 
@@ -19,7 +19,7 @@ def send_mail_func(self):
         send_mail(
             subject=mail_subject,
             message=message,
-            from_email=prod.EMAIL_HOST_USER,
+            from_email=dev.EMAIL_HOST_USER,
             recipient_list=[to_email],
             fail_silently=False,
         )

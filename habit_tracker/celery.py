@@ -3,13 +3,13 @@ import os
 from celery import Celery
 from celery.schedules import crontab
 
-from habit_tracker import settings
+from django.conf import settings
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'habit_tracker.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'habit_tracker.settings.dev')
 
 app = Celery('habit_tracker')
 
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings.dev', namespace='CELERY')
 
 app.autodiscover_tasks()
 
